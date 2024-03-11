@@ -1,0 +1,463 @@
+unit main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage;
+
+type
+  TForm1 = class(TForm)
+    img1: TImage;
+    img2: TImage;
+    img3: TImage;
+    img4: TImage;
+    img5: TImage;
+    img6: TImage;
+    img7: TImage;
+    img8: TImage;
+    img9: TImage;
+    imgP1: TImage;
+    imgP2: TImage;
+    changeP1Btn: TButton;
+    changeP2Btn: TButton;
+    openDlg: TOpenDialog;
+    scoreLab: TLabel;
+    P1Lab: TLabel;
+    P2Lab: TLabel;
+    TurnLab: TLabel;
+    NewGameBtn: TButton;
+    AgainBtn: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure img1Click(Sender: TObject);
+    procedure img2Click(Sender: TObject);
+    procedure img3Click(Sender: TObject);
+    procedure img4Click(Sender: TObject);
+    procedure img5Click(Sender: TObject);
+    procedure img6Click(Sender: TObject);
+    procedure img7Click(Sender: TObject);
+    procedure img8Click(Sender: TObject);
+    procedure img9Click(Sender: TObject);
+    procedure AgainBtnClick(Sender: TObject);
+    procedure NewGameBtnClick(Sender: TObject);
+    procedure changeP1BtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure checkFlag(); // 判斷輸贏程序
+  end;
+
+type
+  arr = array[0..2, 0..2] of Integer; // 方格
+  Turn = (P1, P2); // 玩家回合
+
+var
+  Form1: TForm1;
+  p1Score: Integer = 0; // 玩家1的分數
+  p2Score: Integer = 0; // 玩家2的分數
+  p1Img:string; // 玩家1圖片
+  p2Img:string; // 玩家2圖片
+  bgImg:string; // 背景圖片
+  playerTurn:Turn; // 第一回合都由玩家1開始
+  plyArr:arr; // 9個方格
+
+implementation
+
+{$R *.dfm}
+
+// 當視窗開始創建
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  playerTurn := P1;
+  p1Img := ExtractFilePath(ParamStr(0)) + 'src/pumpkin.png';
+  p2Img := ExtractFilePath(ParamStr(0)) + 'src/tomato.png';
+  bgImg := ExtractFilePath(ParamStr(0)) + 'src/bg.png';
+end;
+
+// 更改玩家1圖片
+procedure TForm1.changeP1BtnClick(Sender: TObject);
+begin
+
+end;
+
+
+(* * * * * * * * * * * * * * * * 九宮格 * * * * * * * * * * * * * * * *)
+// img1
+procedure TForm1.img1Click(Sender: TObject);
+begin
+  if plyArr[0][0] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img1.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[0][0] := 1;
+    end
+    else
+    begin
+      img1.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[0][0] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img2
+procedure TForm1.img2Click(Sender: TObject);
+begin
+  if plyArr[0][1] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img2.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[0][1] := 1;
+    end
+    else
+    begin
+      img2.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[0][1] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img3
+procedure TForm1.img3Click(Sender: TObject);
+begin
+  if plyArr[0][2] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img3.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[0][2] := 1;
+    end
+    else
+    begin
+      img3.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[0][2] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img4
+procedure TForm1.img4Click(Sender: TObject);
+begin
+  if plyArr[1][0] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img4.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[1][0] := 1;
+    end
+    else
+    begin
+      img4.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[1][0] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img5
+procedure TForm1.img5Click(Sender: TObject);
+begin
+  if plyArr[1][1] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img5.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[1][1] := 1;
+    end
+    else
+    begin
+      img5.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[1][1] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img6
+procedure TForm1.img6Click(Sender: TObject);
+begin
+  if plyArr[1][2] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img6.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[1][2] := 1;
+    end
+    else
+    begin
+      img6.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[1][2] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img7
+procedure TForm1.img7Click(Sender: TObject);
+begin
+  if plyArr[2][0] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img7.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[2][0] := 1;
+    end
+    else
+    begin
+      img7.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[2][0] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img8
+procedure TForm1.img8Click(Sender: TObject);
+begin
+  if plyArr[2][1] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img8.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[2][1] := 1;
+    end
+    else
+    begin
+      img8.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[2][1] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// img9
+procedure TForm1.img9Click(Sender: TObject);
+begin
+  if plyArr[2][2] = 0 then
+  begin
+    if playerTurn = P1 then
+    begin
+      img9.Picture.LoadFromFile(p1Img);
+      TurnLab.Caption := '玩家2回合';
+      playerTurn := P2;
+      plyArr[2][2] := 1;
+    end
+    else
+    begin
+      img9.Picture.LoadFromFile(p2Img);
+      TurnLab.Caption := '玩家1回合';
+      playerTurn := P1;
+      plyArr[2][2] := 2;
+    end;
+  end;
+  checkFlag();
+end;
+
+// 判斷輸贏
+procedure TForm1.checkFlag;
+var
+  i:Integer;
+  j:Integer;
+begin
+  for i := 0 to 2 do
+  begin
+    // 判斷橫向
+    if (plyArr[i][0]) and (plyArr[i][1]) and (plyArr[i][2]) = 1 then
+    begin
+      MessageBoxA(0, '玩家1獲勝！', '提示', MB_OK);
+      Inc(p1Score);
+      
+      for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+      Break;
+    end
+    else if (plyArr[i][0]) and (plyArr[i][1]) and (plyArr[i][2]) = 2 then
+    begin
+      MessageBoxA(0, '玩家2獲勝！', '提示', MB_OK);
+      Inc(p2Score); 
+
+      for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end; 
+      Break;
+    end;
+
+    // 判斷縱向  
+    if (plyArr[0][i]) and (plyArr[1][i]) and (plyArr[2][i]) = 1 then
+    begin
+      MessageBoxA(0, '玩家1獲勝！', '提示', MB_OK); 
+      Inc(p1Score);
+
+      for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+      Break;   
+    end
+    else if (plyArr[0][i]) and (plyArr[1][i]) and (plyArr[2][i]) = 2 then
+    begin
+      MessageBoxA(0, '玩家2獲勝！', '提示', MB_OK);
+      Inc(p2Score);
+
+      for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+      Break;
+    end;
+  end;
+
+  // 判斷斜線
+  if (plyArr[0][0]) and (plyArr[1][1]) and (plyArr[2][2]) = 1 then
+  begin
+    MessageBoxA(0, '玩家1獲勝！', '提示', MB_OK);
+    Inc(p1Score); 
+
+    for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+  end
+  else if (plyArr[0][0]) and (plyArr[1][1]) and (plyArr[2][2]) = 2 then
+  begin
+    MessageBoxA(0, '玩家2獲勝！', '提示', MB_OK);
+    Inc(p2Score);
+
+    for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+  end;
+
+  if (plyArr[0][2]) and (plyArr[1][1]) and (plyArr[2][0]) = 1 then
+  begin
+    MessageBoxA(0, '玩家1獲勝！', '提示', MB_OK);
+    Inc(p1Score);
+
+    for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+  end
+  else if (plyArr[0][2]) and (plyArr[1][1]) and (plyArr[2][0]) = 2 then
+  begin
+    MessageBoxA(0, '玩家2獲勝！', '提示', MB_OK);
+    Inc(p2Score);
+
+    for j := 0 to 2 do
+      begin
+        plyArr[j][0] := 3;
+        plyArr[j][1] := 3;
+        plyArr[j][2] := 3;
+      end;
+  end;
+
+  scoreLab.Caption := IntToStr(p1Score) + ':' + IntToStr(p2Score);     
+end;
+
+// 再來一次
+procedure TForm1.AgainBtnClick(Sender: TObject);
+var
+  i:Integer;
+begin
+  for i := 0 to 2 do
+  begin
+    plyArr[i][0] := 0;
+    plyArr[i][1] := 0;
+    plyArr[i][2] := 0;
+  end;
+
+  img1.Picture.LoadFromFile(bgImg); 
+  img2.Picture.LoadFromFile(bgImg); 
+  img3.Picture.LoadFromFile(bgImg); 
+  img4.Picture.LoadFromFile(bgImg); 
+  img5.Picture.LoadFromFile(bgImg); 
+  img6.Picture.LoadFromFile(bgImg); 
+  img7.Picture.LoadFromFile(bgImg); 
+  img8.Picture.LoadFromFile(bgImg); 
+  img9.Picture.LoadFromFile(bgImg);  
+end;
+
+// 新的遊戲
+procedure TForm1.NewGameBtnClick(Sender: TObject);
+var
+  i:Integer;
+begin
+  p1Score := 0;
+  p2Score := 0;
+  scoreLab.Caption := IntToStr(p1Score) + ':' + IntToStr(p2Score); 
+
+  for i := 0 to 2 do
+  begin
+    plyArr[i][0] := 0;
+    plyArr[i][1] := 0;
+    plyArr[i][2] := 0;
+  end;
+
+  img1.Picture.LoadFromFile(bgImg); 
+  img2.Picture.LoadFromFile(bgImg); 
+  img3.Picture.LoadFromFile(bgImg); 
+  img4.Picture.LoadFromFile(bgImg); 
+  img5.Picture.LoadFromFile(bgImg); 
+  img6.Picture.LoadFromFile(bgImg); 
+  img7.Picture.LoadFromFile(bgImg); 
+  img8.Picture.LoadFromFile(bgImg); 
+  img9.Picture.LoadFromFile(bgImg); 
+end;
+
+end.
